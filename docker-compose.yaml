@@ -6,6 +6,10 @@ services:
       # Persist configuration (AI login tokens, etc.)
       - ai_box_config:/root/.config
       - ai_box_local:/root/.local
+      # Persist AI agent configurations
+      - ai_box_gemini:/root/.gemini
+      - ai_box_claude:/root/.claude
+      - ai_box_cursor:/root/.cursor
       # Persist bash history
       - ai_box_bash_history:/root/bash_history_mount
     environment:
@@ -21,4 +25,7 @@ services:
 volumes:
   ai_box_config:
   ai_box_local:
+  ai_box_gemini:
+  ai_box_claude:
+  ai_box_cursor:
   ai_box_bash_history:

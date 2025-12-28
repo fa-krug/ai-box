@@ -17,7 +17,7 @@ RUN apt-get update && apt-get install -y \
     && mkdir /var/run/sshd \
     && rm -rf /var/lib/apt/lists/*
 
-# Install AI CLIs (Gemini + Claude)
+# Install AI CLIs (Gemini + Claude + Cursor)
 RUN npm install -g @google/gemini-cli @anthropic-ai/claude-code
 
 # Configs
