@@ -36,9 +36,7 @@ RUN chmod +x /entrypoint.sh
 
 # Auto-launch zellij welcome screen on SSH login
 RUN cat >> ~/.bashrc << 'EOF'
-if [[ $- =~ i ]] && [[ -z "$ZELLIJ" ]] && [[ -n "$SSH_TTY" ]]; then
-  exec zellij --layout welcome
-fi
+exec zellij --layout welcome
 EOF
 
 WORKDIR /work
