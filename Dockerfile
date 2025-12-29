@@ -1,9 +1,8 @@
 FROM node:20-bookworm
 
-# Install SSH, tmux, essential dev tools, and Python
+# Install SSH, essential dev tools, and Python
 RUN apt-get update && apt-get install -y \
     openssh-server \
-    tmux \
     curl \
     git \
     vim \
@@ -20,16 +19,25 @@ RUN apt-get update && apt-get install -y \
 # Install AI CLIs (Gemini + Claude + Cursor)
 RUN npm install -g @google/gemini-cli @anthropic-ai/claude-code
 
+# Install zellij (terminal multiplexer)
+RUN curl -L https://github.com/zellij-org/zellij/releases/latest/download/zellij-x86_64-unknown-linux-musl.tar.gz | tar -xz -C /usr/local/bin && \
+    chmod +x /usr/local/bin/zellij
+
 # Configs
 RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
-COPY tmux.conf /root/.tmux.conf
+RUN mkdir -p /root/.config/zellij/layouts
+COPY config.kdl /root/.config/zellij/config.kdl
+COPY layouts/gemini.kdl /root/.config/zellij/layouts/gemini.kdl
+COPY layouts/claude.kdl /root/.config/zellij/layouts/claude.kdl
+COPY layouts/cursor.kdl /root/.config/zellij/layouts/cursor.kdl
+COPY layouts/welcome.kdl /root/.config/zellij/layouts/welcome.kdl
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-# Auto-attach to tmux session on SSH login
+# Auto-launch zellij welcome screen on SSH login
 RUN cat >> ~/.bashrc << 'EOF'
-if [[ $- =~ i ]] && [[ -z "$TMUX" ]] && [[ -n "$SSH_TTY" ]]; then
-  tmux attach-session -t ai-bot || tmux new-session -s ai-bot
+if [[ $- =~ i ]] && [[ -z "$ZELLIJ" ]] && [[ -n "$SSH_TTY" ]]; then
+  exec zellij --layout welcome
 fi
 EOF
 

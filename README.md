@@ -1,18 +1,20 @@
 # AI-Box
 
-A Dockerized development environment optimized for mobile (iPhone) access via SSH and tmux, pre-loaded with Gemini and Claude CLIs, and essential dev tools.
+A Dockerized development environment optimized for mobile (iPhone) access via SSH and zellij, pre-loaded with Gemini and Claude CLIs, and essential dev tools.
 
 ## Features
 
 - **Multi-Arch Support:** Builds for both `amd64` and `arm64` (perfect for Raspberry Pi or Cloud VMs).
 - **SSH Access:** Connect from anywhere (e.g., using Termius on iPhone).
-- **tmux Pre-configured:** Optimized for touch-based scrolling and easy AI launching.
+- **zellij Pre-configured:** Modern terminal multiplexer optimized for touch-based scrolling and easy AI launching.
+- **Welcome Screen:** Interactive session manager on SSH connection for creating/attaching to sessions.
 - **AI CLIs:** Includes `gemini`, `claude` (Anthropic Claude Code), and `cursor` agent.
 - **Dev Tools:** Pre-installed with `git`, `vim`, `nano`, `htop`, `ripgrep`, `fzf`.
 - **Python Ready:** Includes Python 3, pip, and venv support.
 - **Persistent Storage:**
     - Mounts your local project folder into `/work`.
     - Persists AI agent configurations (Gemini, Claude, Cursor) across restarts.
+    - Persists zellij sessions across container restarts.
     - Persists bash history across container restarts.
 
 ## Local Setup
@@ -38,14 +40,33 @@ A Dockerized development environment optimized for mobile (iPhone) access via SS
    ssh root@localhost -p 2222
    ```
 
-## tmux Shortcuts (Prefix is `Ctrl+A`)
+   Upon connection, you'll see the zellij welcome screen where you can:
+   - Create a new session (with optional name and working directory)
+   - Attach to an existing session
+   - Resurrect a previous session
 
-- `Ctrl+A` + `g`: Open Gemini in a new window.
-- `Ctrl+A` + `c`: Open Claude in a new window.
-- `Ctrl+A` + `r`: Open Cursor agent in a new window.
-- `Ctrl+A` + `n`: Next window.
-- `Ctrl+A` + `p`: Previous window.
-- **Scrolling:** Mouse mode is enabled for touch swiping.
+## zellij Shortcuts
+
+### AI Tool Launching (Prefix is `Ctrl+A`)
+- `Ctrl+A` + `g`: Open Gemini in a new tab.
+- `Ctrl+A` + `c`: Open Claude in a new tab.
+- `Ctrl+A` + `r`: Open Cursor agent in a new tab.
+- `Ctrl+A` + `n`: Next tab.
+- `Ctrl+A` + `p`: Previous tab.
+
+### Session Management
+- `Ctrl+O` + `w`: Open session manager (create/attach/switch sessions).
+- `Ctrl+O` + `d`: Detach from current session.
+
+### Navigation & Modes
+- `Ctrl+P`: Pane mode (create/close/navigate panes).
+- `Ctrl+T`: Tab mode (create/close/navigate tabs).
+- `Ctrl+S`: Scroll mode (scroll back through history, search).
+- `Ctrl+N`: Resize mode (resize panes).
+
+### Other Features
+- **Mouse Mode:** Enabled for touch swiping and pane selection.
+- **Session Resurrection:** Sessions automatically persist and can be restored on reconnect.
 
 ## Cursor Agent Setup
 
@@ -58,7 +79,7 @@ Cursor is an AI-powered code editor and agent included in this environment. To u
    ```
 
 2. **Using Cursor Agent:**
-   - Access via tmux shortcut: `Ctrl+A` + `r`
+   - Access via zellij shortcut: `Ctrl+A` + `r`
    - Or run directly: `cursor`
    - Your Cursor configuration persists via the `ai_box_cursor` volume
 

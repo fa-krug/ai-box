@@ -7,9 +7,6 @@ fi
 # Start SSH service
 service ssh start
 
-# Create a session named 'ai-box' if it doesn't exist. 
-# Window 0 is just a standard bash shell.
-tmux new-session -d -s ai-box -n "Shell" "bash"
-
-# Attach to the session
-tmux attach-session -t ai-box
+# Keep container running (SSH service runs in background)
+# Users will launch zellij via SSH login bashrc hook
+tail -f /dev/null

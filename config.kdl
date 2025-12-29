@@ -1,0 +1,153 @@
+// Zellij Configuration
+// Optimized for mobile SSH access and AI tool launching
+
+// Core settings for mobile optimization
+mouse_mode true
+scroll_buffer_size 10000
+pane_frames true
+simplified_ui false
+default_shell "bash"
+copy_on_select false
+
+// Session management and persistence
+session_serialization true
+serialize_pane_viewport true
+scrollback_lines_to_serialize 1000
+
+// Theme customization (matching tmux aesthetics)
+theme "ai-box-dark"
+themes {
+    ai-box-dark {
+        fg "#ffffff"
+        bg "#000000"
+        black "#000000"
+        red "#ff0000"
+        green "#00ff00"
+        yellow "#ffff00"
+        blue "#0000ff"
+        magenta "#ff00ff"
+        cyan "#00ffff"
+        white "#ffffff"
+        orange "#ff8800"
+    }
+}
+
+// Keybindings with custom tmux-style mode
+keybinds clear-defaults=true {
+    // Normal mode - base operations
+    normal {
+        // Ctrl+A activates custom "tmux" mode (simulates tmux prefix)
+        bind "Ctrl a" { SwitchToMode "tmux"; }
+
+        // Standard zellij modes
+        bind "Ctrl p" { SwitchToMode "pane"; }
+        bind "Ctrl t" { SwitchToMode "tab"; }
+        bind "Ctrl n" { SwitchToMode "resize"; }
+        bind "Ctrl s" { SwitchToMode "scroll"; }
+        bind "Ctrl o" { SwitchToMode "session"; }
+
+        // Unbind other keys to prevent conflicts
+        bind "Ctrl c" { Quit; }
+    }
+
+    // Custom tmux-style mode for AI launching and navigation
+    // Activated by Ctrl+A
+    tmux {
+        // AI Tool Launchers
+        bind "g" {
+            NewTab { layout "gemini"; name "Gemini"; }
+            SwitchToMode "normal";
+        }
+
+        bind "c" {
+            NewTab { layout "claude"; name "Claude"; }
+            SwitchToMode "normal";
+        }
+
+        bind "r" {
+            NewTab { layout "cursor"; name "Cursor"; }
+            SwitchToMode "normal";
+        }
+
+        // Tab navigation
+        bind "n" { GoToNextTab; SwitchToMode "normal"; }
+        bind "p" { GoToPreviousTab; SwitchToMode "normal"; }
+
+        // Send literal Ctrl+A to inner shell
+        bind "Ctrl a" { Write 1; SwitchToMode "normal"; }
+
+        // Exit tmux mode
+        bind "Esc" { SwitchToMode "normal"; }
+    }
+
+    // Locked mode - cannot be exited by accident
+    locked {
+        bind "Ctrl g" { SwitchToMode "normal"; }
+    }
+
+    // Resize mode - adjust pane sizes
+    resize {
+        bind "Ctrl n" { SwitchToMode "normal"; }
+        bind "h" "Left" { Resize "Increase Left"; }
+        bind "l" "Right" { Resize "Increase Right"; }
+        bind "k" "Up" { Resize "Increase Up"; }
+        bind "j" "Down" { Resize "Increase Down"; }
+        bind "=" { Resize "Increase"; }
+        bind "-" { Resize "Decrease"; }
+        bind "Esc" { SwitchToMode "normal"; }
+    }
+
+    // Pane mode - create/close/navigate panes
+    pane {
+        bind "Ctrl p" { SwitchToMode "normal"; }
+        bind "h" "Left" { MoveFocus "Left"; }
+        bind "l" "Right" { MoveFocus "Right"; }
+        bind "j" "Down" { MoveFocus "Down"; }
+        bind "k" "Up" { MoveFocus "Up"; }
+        bind "x" { CloseFocus; SwitchToMode "normal"; }
+        bind "n" { NewPane; SwitchToMode "normal"; }
+        bind "d" { CloseFocus; SwitchToMode "normal"; }
+        bind "Esc" { SwitchToMode "normal"; }
+    }
+
+    // Tab mode - create/close/navigate tabs
+    tab {
+        bind "Ctrl t" { SwitchToMode "normal"; }
+        bind "h" "Left" { GoToPreviousTab; }
+        bind "l" "Right" { GoToNextTab; }
+        bind "n" { NewTab; SwitchToMode "normal"; }
+        bind "x" { CloseTab; SwitchToMode "normal"; }
+        bind "r" { RenameTab ""; SwitchToMode "normal"; }
+        bind "Esc" { SwitchToMode "normal"; }
+    }
+
+    // Scroll mode - navigate and search scrollback
+    scroll {
+        bind "Ctrl s" { SwitchToMode "normal"; }
+        bind "e" { EditScrollback; SwitchToMode "normal"; }
+        bind "Ctrl c" { ScrollToBottom; SwitchToMode "normal"; }
+        bind "j" "Down" { ScrollDown; }
+        bind "k" "Up" { ScrollUp; }
+        bind "Ctrl f" "PageDown" { PageScrollDown; }
+        bind "Ctrl b" "PageUp" { PageScrollUp; }
+        bind "d" { HalfPageScrollDown; }
+        bind "u" { HalfPageScrollUp; }
+        bind "/" { Search "down"; }
+        bind "?" { Search "up"; }
+        bind "Esc" { SwitchToMode "normal"; }
+    }
+
+    // Session mode - manage sessions
+    session {
+        bind "Ctrl o" { SwitchToMode "normal"; }
+        bind "w" {
+            LaunchOrFocusPlugin "session-manager" {
+                floating true
+            }
+            SwitchToMode "normal";
+        }
+        bind "d" { Detach; }
+        bind "n" { NewSession; SwitchToMode "normal"; }
+        bind "Esc" { SwitchToMode "normal"; }
+    }
+}
