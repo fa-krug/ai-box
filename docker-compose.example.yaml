@@ -4,22 +4,17 @@ services:
     container_name: ai-box
     restart: unless-stopped
     volumes:
-      # Persist configuration (AI login tokens, etc.)
-      - ./work/config:/root/.config
-      - ./work/local:/root/.local
-      # Persist AI agent configurations
-      - ./work/gemini:/root/.gemini
-      - ./work/claude:/root/.claude
-      - ./work/cursor:/root/.cursor
-      # Persist bash history
-      - ./work/bash_history:/root/bash_history_mount
+      - root:/root
+      - work:/work
     environment:
-      - GEMINI_API_KEY=${GEMINI_API_KEY}
       - SSH_PASSWORD=${SSH_PASSWORD:-root}
-      # Point bash history to persistent volume
       - HISTFILE=/root/bash_history_mount/.bash_history
     ports:
       - "2222:22"
     stdin_open: true
     tty: true
+
+volumes:
+  root:
+  work:
 
