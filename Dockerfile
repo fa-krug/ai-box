@@ -32,7 +32,6 @@ COPY config.kdl /root/.config/zellij/config.kdl
 COPY layouts/gemini.kdl /root/.config/zellij/layouts/gemini.kdl
 COPY layouts/claude.kdl /root/.config/zellij/layouts/claude.kdl
 COPY layouts/cursor.kdl /root/.config/zellij/layouts/cursor.kdl
-COPY layouts/welcome.kdl /root/.config/zellij/layouts/welcome.kdl
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
