@@ -5,14 +5,14 @@ services:
     restart: unless-stopped
     volumes:
       # Persist configuration (AI login tokens, etc.)
-      - ai_box_config:/root/.config
-      - ai_box_local:/root/.local
+      - ./work/config:/root/.config
+      - ./work/local:/root/.local
       # Persist AI agent configurations
-      - ai_box_gemini:/root/.gemini
-      - ai_box_claude:/root/.claude
-      - ai_box_cursor:/root/.cursor
+      - ./work/gemini:/root/.gemini
+      - ./work/claude:/root/.claude
+      - ./work/cursor:/root/.cursor
       # Persist bash history
-      - ai_box_bash_history:/root/bash_history_mount
+      - ./work/bash_history:/root/bash_history_mount
     environment:
       - GEMINI_API_KEY=${GEMINI_API_KEY}
       - SSH_PASSWORD=${SSH_PASSWORD:-root}
@@ -23,10 +23,3 @@ services:
     stdin_open: true
     tty: true
 
-volumes:
-  ai_box_config:
-  ai_box_local:
-  ai_box_gemini:
-  ai_box_claude:
-  ai_box_cursor:
-  ai_box_bash_history:

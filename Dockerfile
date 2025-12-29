@@ -26,6 +26,13 @@ COPY tmux.conf /root/.tmux.conf
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
+# Auto-attach to tmux session on SSH login
+RUN cat >> ~/.bashrc << 'EOF'
+if [[ $- =~ i ]] && [[ -z "$TMUX" ]] && [[ -n "$SSH_TTY" ]]; then
+  tmux attach-session -t ai-bot || tmux new-session -s ai-bot
+fi
+EOF
+
 WORKDIR /work
 EXPOSE 22
 ENTRYPOINT ["/entrypoint.sh"]
