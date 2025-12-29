@@ -36,9 +36,9 @@ COPY layouts/welcome.kdl /root/.config/zellij/layouts/welcome.kdl
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-# Auto-launch zellij welcome screen on SSH login
+# Auto-launch zellij on SSH login (shows session selection menu)
 RUN cat >> ~/.bashrc << 'EOF'
-exec zellij --layout welcome
+exec zellij
 EOF
 
 WORKDIR /work
