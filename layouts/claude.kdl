@@ -1,5 +1,6 @@
 layout {
     pane {
-        command "claude"
+        command "bash"
+        args "-c" "claude-code || bash"
     }
 }

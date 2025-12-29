@@ -1,5 +1,6 @@
 layout {
     pane {
-        command "cursor"
+        command "bash"
+        args "-c" "cursor || bash"
     }
 }
