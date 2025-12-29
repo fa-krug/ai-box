@@ -28,7 +28,6 @@ RUN ARCH=$(dpkg --print-architecture) && \
 # Configs
 RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 RUN mkdir -p /root/.config/zellij/layouts
-COPY config.kdl /root/.config/zellij/config.kdl
 COPY layouts/gemini.kdl /root/.config/zellij/layouts/gemini.kdl
 COPY layouts/claude.kdl /root/.config/zellij/layouts/claude.kdl
 COPY layouts/cursor.kdl /root/.config/zellij/layouts/cursor.kdl
