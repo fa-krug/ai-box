@@ -35,10 +35,10 @@ COPY layouts/cursor.kdl /root/.config/zellij/layouts/cursor.kdl
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-# Auto-launch zellij on SSH login (shows session selection menu)
+# Auto-launch zellij on SSH login with built-in welcome layout
 RUN cat >> ~/.bashrc << 'EOF'
 if [ -z "$ZELLIJ" ]; then
-    exec zellij
+    exec zellij --layout welcome
 fi
 EOF
 
