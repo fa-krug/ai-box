@@ -38,7 +38,9 @@ RUN chmod +x /entrypoint.sh
 
 # Auto-launch zellij on SSH login (shows session selection menu)
 RUN cat >> ~/.bashrc << 'EOF'
-exec zellij
+if [ -z "$ZELLIJ" ]; then
+    exec zellij
+fi
 EOF
 
 WORKDIR /work
