@@ -19,27 +19,10 @@ RUN apt-get update && apt-get install -y \
 # Install AI CLIs (Gemini + Claude + Cursor)
 RUN npm install -g @google/gemini-cli @anthropic-ai/claude-code
 
-# Install zellij (terminal multiplexer) - detect architecture
-RUN ARCH=$(dpkg --print-architecture) && \
-    ZELLIJ_ARCH=$([ "$ARCH" = "arm64" ] && echo "aarch64" || echo "x86_64") && \
-    curl -L https://github.com/zellij-org/zellij/releases/latest/download/zellij-${ZELLIJ_ARCH}-unknown-linux-musl.tar.gz | tar -xz -C /usr/local/bin && \
-    chmod +x /usr/local/bin/zellij
-
 # Configs
 RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
-RUN mkdir -p /root/.config/zellij/layouts
-COPY layouts/gemini.kdl /root/.config/zellij/layouts/gemini.kdl
-COPY layouts/claude.kdl /root/.config/zellij/layouts/claude.kdl
-COPY layouts/cursor.kdl /root/.config/zellij/layouts/cursor.kdl
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
-
-# Auto-launch zellij on SSH login with built-in welcome layout
-RUN cat >> ~/.bashrc << 'EOF'
-if [ -z "$ZELLIJ" ]; then
-    exec zellij --layout welcome
-fi
-EOF
 
 WORKDIR /work
 EXPOSE 22

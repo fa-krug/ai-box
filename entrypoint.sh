@@ -8,5 +8,4 @@ fi
 service ssh start
 
 # Keep container running (SSH service runs in background)
-# Users will launch zellij via SSH login bashrc hook
 tail -f /dev/null

@@ -5,18 +5,11 @@ This guide explains how to use Claude Code CLI within the AI-Box environment.
 ## Quick Start
 
 ### Launch Claude
-There are two ways to launch Claude:
 
-1. **Via zellij shortcut** (from any session):
-   ```
-   Ctrl+A + c
-   ```
-   This creates a new tab with Claude running.
-
-2. **Direct command** (in any pane):
-   ```bash
-   claude
-   ```
+Simply run:
+```bash
+claude
+```
 
 ## Setup
 
@@ -73,27 +66,10 @@ claude "Generate a Python function that validates email addresses"
 claude "Generate comprehensive documentation for this module"
 ```
 
-## Integration with Zellij Layouts
-
-Claude runs in its own tab within zellij. You can:
-- Switch between Claude and other AI tools using tab navigation (`Ctrl+T`)
-- Run multiple instances of Claude in different tabs
-- Use pane mode (`Ctrl+P`) to split your workspace
-
-### Example Workflow
-
-1. Launch zellij (auto-happens on SSH login)
-2. Press `Ctrl+A + g` to open Gemini in a new tab
-3. Press `Ctrl+A + c` to open Claude in another tab
-4. Press `Ctrl+T + l` to switch to the next tab (Claude)
-5. Use `Ctrl+T + h` to go back to Gemini
-
 ## Tips
 
-- **Session Persistence:** Your Claude sessions persist when you detach from zellij and reconnect.
-- **Background Operation:** Claude runs in its own tab, allowing you to work in other panes/tabs simultaneously.
+- **Session Persistence:** Your Claude sessions persist across reconnections.
 - **History:** Claude maintains conversation history within a session.
-- **Scrollback:** Use scroll mode (`Ctrl+S`) to review previous interactions.
 
 ## Troubleshooting
 
