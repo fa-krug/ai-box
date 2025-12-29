@@ -1,8 +1,9 @@
 FROM node:20-bookworm
 
-# Install SSH, essential dev tools, and Python
+# Install SSH, Mosh, essential dev tools, and Python
 RUN apt-get update && apt-get install -y \
     openssh-server \
+    mosh \
     curl \
     git \
     vim \
@@ -26,4 +27,5 @@ RUN chmod +x /entrypoint.sh
 
 WORKDIR /work
 EXPOSE 22
+EXPOSE 60000-61000/udp
 ENTRYPOINT ["/entrypoint.sh"]

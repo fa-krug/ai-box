@@ -6,6 +6,7 @@ A Dockerized development environment optimized for mobile (iPhone) access via SS
 
 - **Multi-Arch Support:** Builds for both `amd64` and `arm64` (perfect for Raspberry Pi or Cloud VMs).
 - **SSH Access:** Connect from anywhere (e.g., using Termius on iPhone).
+- **Mosh Support:** Mobile Shell for better connectivity on unreliable networks.
 - **AI CLIs:** Includes `gemini`, `claude`, and `cursor-agent`.
 - **Dev Tools:** Pre-installed with `git`, `vim`, `nano`, `htop`, `ripgrep`, `fzf`.
 - **Python Ready:** Includes Python 3, pip, and venv support.
@@ -32,6 +33,7 @@ A Dockerized development environment optimized for mobile (iPhone) access via SS
    docker build -t ai-box .
    docker run -d \
      -p 2222:22 \
+     -p 60000-61000:60000-61000/udp \
      -e SSH_PASSWORD="your_secure_password" \
      -e GEMINI_API_KEY="your_gemini_api_key_here" \
      -v $(pwd):/work \
@@ -45,6 +47,13 @@ A Dockerized development environment optimized for mobile (iPhone) access via SS
    ```
 
    You'll have a plain terminal session where you can run any commands directly.
+
+4. **Connect via Mosh (Optional):**
+   ```bash
+   mosh root@localhost --ssh='ssh -p 2222' -a
+   ```
+
+   Mosh provides better connectivity on unreliable networks with lower latency and automatic reconnection on network changes.
 
 ## Using AI CLIs
 
