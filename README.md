@@ -7,7 +7,7 @@ A Dockerized development environment optimized for mobile (iPhone) access via SS
 - **Multi-Arch Support:** Builds for both `amd64` and `arm64` (perfect for Raspberry Pi or Cloud VMs).
 - **SSH Access:** Connect from anywhere (e.g., using Termius on iPhone).
 - **Mosh Support:** Mobile Shell for better connectivity on unreliable networks.
-- **AI CLIs:** Includes `gemini`, `claude`, and `cursor-agent`.
+- **AI CLIs:** Includes `gemini`, `claude`, `cursor-agent`, and `happy` (mobile-first coding with realtime voice).
 - **Dev Tools:** Pre-installed with `git`, `vim`, `nano`, `htop`, `ripgrep`, `fzf`.
 - **Python Ready:** Includes Python 3, pip, and venv support.
 - **Persistent Storage:**
@@ -74,6 +74,27 @@ gemini
 cursor-agent
 ```
 
+### Happy Coder
+```bash
+happy
+```
+
+Happy Coder is a mobile and web client for Claude and Codex with realtime voice and end-to-end encryption. Use `happy` instead of `claude` to access your coding session from mobile devices:
+
+```bash
+happy --help          # View all options
+happy                 # Start interactive session with mobile support
+```
+
+**Features:**
+- **Mobile Access:** Monitor AI coding progress from your phone
+- **Realtime Voice:** Voice commands and responses
+- **Device Switching:** Seamlessly transition control between phone and desktop
+- **End-to-End Encryption:** Your code never leaves your devices unencrypted
+- **Cross-Platform:** Available on iOS, Android, and web
+
+When using `happy`, you can press any keyboard key on your desktop to regain control, or switch to mobile control for remote monitoring and voice interactions.
+
 All tools are available directly in your SSH session.
 
 ## CI/CD (GitHub Actions)
@@ -90,5 +111,6 @@ To use the automated build, add these secrets to your GitHub repository:
 
 - Docker
 - A Gemini API Key (for `gemini`)
-- An Anthropic API Key (for `claude`)
+- An Anthropic API Key (for `claude` and `happy`)
 - A Cursor API Key (for `cursor-agent`) - *optional*
+- Happy.engineering account (for `happy` mobile features) - *optional, use for mobile access*
